@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "stm32f411xe.h"
 
 #define PERIPH_BASE (0x40000000UL)
 
