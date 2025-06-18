@@ -143,3 +143,49 @@ AHB1의 base addr : 0x40000000
 #define APB2PERIPH_BASE (PERIPH_BASE + APB2PERIPH_OFFSET)
 #define AHB1PERIPH_BASE (PERIPH_BASE + AHB1PERIPH_OFFSET)
 ```
+
+
+### 구조체 사용의 중요성 알기
+```c
+/*구조체 사용의 중요성 알기*/
+//구조체 쓰기 전
+#define GPIOA_MODER   *(volatile uint32_t *)(GPIOA_BASE + 0x00)
+#define GPIOA_OTYPER  *(volatile uint32_t *)(GPIOA_BASE + 0x04)
+#define GPIOA_OSPEEDR *(volatile uint32_t *)(GPIOA_BASE + 0x08)
+#define GPIOA_PUPDR   *(volatile uint32_t *)(GPIOA_BASE + 0x0C)
+#define GPIOA_IDR     *(volatile uint32_t *)(GPIOA_BASE + 0x10)
+#define GPIOA_ODR     *(volatile uint32_t *)(GPIOA_BASE + 0x14)
+#define GPIOA_BSRR    *(volatile uint32_t *)(GPIOA_BASE + 0x18)
+#define GPIOA_LCKR    *(volatile uint32_t *)(GPIOA_BASE + 0x1C)
+#define GPIOA_AFRL    *(volatile uint32_t *)(GPIOA_BASE + 0x20)
+#define GPIOA_AFRH    *(volatile uint32_t *)(GPIOA_BASE + 0x24)
+
+#define GPIOB_MODER   *(volatile uint32_t *)(GPIOB_BASE + 0x00)
+#define GPIOB_OTYPER  *(volatile uint32_t *)(GPIOB_BASE + 0x04)
+#define GPIOB_OSPEEDR *(volatile uint32_t *)(GPIOB_BASE + 0x08)
+#define GPIOB_PUPDR   *(volatile uint32_t *)(GPIOB_BASE + 0x0C)
+#define GPIOB_IDR     *(volatile uint32_t *)(GPIOB_BASE + 0x10)
+#define GPIOB_ODR     *(volatile uint32_t *)(GPIOB_BASE + 0x14)
+#define GPIOB_BSRR    *(volatile uint32_t *)(GPIOB_BASE + 0x18)
+#define GPIOB_LCKR    *(volatile uint32_t *)(GPIOB_BASE + 0x1C)
+#define GPIOB_AFRL    *(volatile uint32_t *)(GPIOB_BASE + 0x20)
+#define GPIOB_AFRH    *(volatile uint32_t *)(GPIOB_BASE + 0x24)
+/*구조체 사용의 중요성 알기*/
+```
+
+> 구조체로 바꾸기
+
+```c
+/*구조체 사용 후*/
+typedef struct{
+   volatile uint32_t MODER;
+   volatile uint32_t OTYPER;
+   volatile uint32_t OSPEEDR;
+   volatile uint32_t PUPDR;
+   volatile uint32_t IDR;
+   volatile uint32_t ODR;
+   volatile uint32_t BSRR;
+   volatile uint32_t LCKR;
+   volatile uint32_t AFR[2]; //배열로 AFRL, AFRH 나타내기
+}GPIO_TypeDef;
+```
