@@ -4,7 +4,7 @@
 
 
 
-#endif /* DRIVER_GPIO_GPIO_H_ */
+
 
 
 #include <stdint.h>
@@ -18,3 +18,4 @@ void GPIO_Init(GPIO_TypeDef *GPIOx, uint32_t pinNum, pin_mode_t pinMode);
 void GPIO_WritePin(GPIO_TypeDef *GPIOx, uint32_t pinNum, pin_state_t pinState);
 uint32_t GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint32_t pinNum);
 uint32_t GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint32_t pinNum);
+#endif /* DRIVER_GPIO_GPIO_H_ */
