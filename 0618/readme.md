@@ -70,11 +70,11 @@ LED 깜박이기 위해 작성한 코드
 > 이제 GPIO MAP을 통해 Peri를 제어할 것
 
 **Datasheet에서 볼 수 있는 GPIOA memory map**
-![](image-4.png)
+![](image-4.png)  
 
 
-**system Architecture**
-![](image-6.png)
+**system Architecture**  
+![](image-6.png)  
 - Core
     **ARM Coretex-M4**
     얘가 instruction 제어를 수행
