@@ -49,6 +49,7 @@ GPIOAEN 를 1로 설정해주면 GPIOA에 CLOCK을 넣어주는 것
 **Register map**  
 ![](image-3.png)  
 
+**RTC 설정 코드**
 RCC base addr: 0x4002 3800  
 AHB1 en clock register에 접근하기 위한 offset : 0x30  
 -> 0x4002 3830  
@@ -57,3 +58,27 @@ AHB1 en clock register에 접근하기 위한 offset : 0x30
     *(volatile uint32_t *)0x40023830 |= (1U <<0); 
 ```
 
+2. GPIO Reigster 설정
+**GPIO mode Reg**  
+![](image-4.png)  
+- Reg addr: `0x40002000`
+- Reg value: `mode[11:10] = 2'b01`
+
+**GPIO output type reg**  
+![](image-5.png)  
+default 값은 push-pull -> 별도 설정 필요 X
+
+**GPIO Reg 설정 코드**
+
+```c
+	/*2. Set PA5 as output pin*/
+    *(volatile uint32_t *)0x40002000 |= (1U << 10);
+    *(volatile uint32_t *)0x40002000 &= ~(1U << 11);
+```
+
+<details>
+<summary> 1U </summary>
+
+`1U`는 `unsigned int`를 의미
+
+</details>
