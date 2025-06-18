@@ -189,3 +189,9 @@ typedef struct{
    volatile uint32_t AFR[2]; //배열로 AFRL, AFRH 나타내기
 }GPIO_TypeDef;
 ```
+[](./gpio_v01.c)  
+
+
+### 폴더 분리
+![]({E27313EE-687A-468E-BBF4-E9D12D1EE206}.png)  
+GPIO 관련된건 다 따로 빼기  
