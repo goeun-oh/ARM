@@ -25,6 +25,7 @@ void LedBar_Init(){
    GPIO_Init(GPIOC, 2, OUTPUT);
    GPIO_Init(GPIOC, 3, OUTPUT);
 }
+
 void LedBar_Write(uint8_t data){
     for(int i=0; i<8; i++){
         if((data & (1<<i)) ==0){

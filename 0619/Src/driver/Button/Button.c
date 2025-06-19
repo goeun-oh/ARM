@@ -16,23 +16,25 @@ enum{
 
 
 
-void Button_Init(){
-	GPIO_Init(GPIOC, 13, INPUT);
+void Button_Init(Button_Handler_t *BTNx, GPIO_TypeDef *GPIOx, uint32_t pinNum){
+	BTNx -> GPIOx = GPIOx;
+	BTNx -> pinNum = pinNum;
+	BTNx -> prevState = RELEASED;
+	GPIO_Init(BTNx->GPIOx, BTNx->pinNum, INPUT);
 }
 
-button_state_t Button_GetState(){
-	static uint32_t prevState = RELEASED; //전원을 처음에 넣으면 초기값이 HIGH
+button_state_t Button_GetState(Button_Handler_t *BTNx){
 	uint32_t curState;
-	curState= GPIO_ReadPin(GPIOC, 13);
+	curState= GPIO_ReadPin(BTNx-> GPIOx, BTNx-> pinNum);
 
 	//처음 누른 경우
-	if ((prevState == RELEASED) && (curState == PUSHED)){
+	if ((BTNx -> prevState == RELEASED) && (curState == PUSHED)){
 		delay(2); //debounce
-		prevState = PUSHED;
+		BTNx -> prevState = PUSHED;
 		return ACT_PUSHED;
-	} else if ((prevState == PUSHED) &&(curState == RELEASED)){
+	} else if ((BTNx -> prevState == PUSHED) &&(curState == RELEASED)){
 		delay(2); //debounce
-		prevState = RELEASED;
+		BTNx->prevState = RELEASED;
 		return ACT_RELEASED;
 	}
 	return NO_ACT;
