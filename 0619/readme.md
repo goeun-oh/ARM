@@ -23,4 +23,4 @@ Application에서 인접한 Layer는 Driver이다.
 
 - 예시  
     ![]({C210C9A6-E664-471B-8447-DBD93432D92B}.png)  
-  - Application에서 바로 MAC이나 PHY에 접근하지 않는다.
+  Application에서 바로 MAC이나 PHY에 접근하지 않는다.
