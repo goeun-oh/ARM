@@ -85,3 +85,38 @@ BTN이 Pullup 되어있다.
 
 **버튼의 상태를 받고 싶음**
 `Button_GetState()` : 버튼의 상태를 받아오는 함수
+
+GPIO READ 함수 수정
+```c
+uint32_t GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint32_t pinNum){
+    return ((GPIOx -> IDR & (1U << pinNum))? 1:0); //0이면 0이나가고, 0이 아닌 값이면 1이나간다
+}
+```
+
+Button Get State  함수
+
+
+```c
+button_state_t Button_GetState(){
+	static uint32_t prevState = RELEASED; //전원을 처음에 넣으면 초기값이 HIGH
+	uint32_t curState;
+	curState= GPIO_ReadPin(GPIOC, 13);
+
+	//처음 누른 경우
+	if ((prevState == RELEASED) && (curState == PUSHED)){
+		prevState = PUSHED;
+		return ACT_PUSHED;
+	} else if ((prevState == PUSHED) &&(curState == RELEASE)){
+		prevState = RELEASED;
+		return ACT_RELEASED;
+	}
+	return NO_ACT;
+}
+```
+static 변수로 선언한 이유 -> Scope를 벗어나도 메모리 공간이 반환되지 않는다.  
+메모리 재할당을 안하니 이전 값이 계속 유지된다.  
+
+**BTN의 상태**  
+1. Button Normal 상태: RELEASED(`1`) 상태  
+2. Button Push: PUSHED(`0`) 상태
+
