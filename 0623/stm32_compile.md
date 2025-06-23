@@ -109,7 +109,7 @@
 ---
 # 링커스크립트 까보기  
 
-[](./linker_script.md)
+[링커스크립트 까보기](./linker_script.md)
 
 ---
 
