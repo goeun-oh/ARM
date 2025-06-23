@@ -109,3 +109,45 @@ main함수에서 다른 함수를 부르는형태를 **콜백**이라고 한다.
 
 `~.elf` 파일이 보드에 다운로드 된다.  
 ![](image-9.png)  
+
+`make clean`으로 기존에 만들어진 실행관련 파일을 다 지우자
+
+`make all`을 하면 컴파일을 진행한다.
+
+![](image-10.png)
+
+**그 다음 분석하기**  
+
+**object file의 size**를 확인가능하다.
+
+    arm-none-eabi-size ap_main.o
+
+![]({854A088A-B2D9-4FD1-8398-CAA0D8FC83A6}.png)
+
+(text, data, bss 영역의 크기를 확인할 수 있다.)
+
+> ![]({4A1A5D0F-5015-4F52-B532-E5A28EA1C048}.png)  
+ap_main.o가 위와같은 section으로 나뉘어져있다.
+
+
+**assmebly어 생성하는 명령어**
+
+    arm-none-eabi-objdump -d ap_main.o > ap_main.d
+
+`ap_main.d` 파일을 열어보면 어셈블리어로 변환된 코드를 볼 수 있다.  
+![]({BC0CB748-1D9A-4A26-AC94-3C2C965CFAED}.png)
+
+특징을 살펴보면 함수 이름 옆에 주소가 다 0으로 되어있다.  
+
+> 이유는 아직 컴파일러가 최적화를 하지 않았기 때문이다.
+
+**`ap_main.nm` 파일 생성**
+
+    arm-none-eabi-nm -nS ap_main.o > ap_main.nm
+
+
+![](image-11.png)
+
+`ap_main.nm`파일이 생성되었다!
+
+ap_main.nm 파일은 심볼을 출력하는 파일이다.
