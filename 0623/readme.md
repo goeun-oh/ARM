@@ -23,54 +23,8 @@ Timer/Counter Peripheral(주변장치)
 
 
 ## 환경구성
-이제 Empty Project 말고 STM32CubeIDE에서 제공하는 걸 이용해서 개발을 진행한다.  
 
-### 1. RCC 설정  
-![](image-1.png)
-- HSE를 사용
-- HSE를 8MHz로 설정
-
-
-HSI: 16MHz 로 고정 (내부 클럭)
-HSE: 외부 클럭 (8MHz, 우리가 사용하는 보드 외부 클럭은 8MHz)
-
-해당 clock이 PLL 회로로 들어가 클럭을 100MHz로 뻥튀기한다.
-
-HCLK이 APB Prescaler를 거쳐 Peripheral Clock이 된다.  
-- Timer는 100MHz로 설정된다.  
-
-![](image-2.png)
-
-### 2. Debuging 설정
-Debuging 용 Wire를 Serial Wire로 설정한다.  
-
-![](image-3.png)
-
-### 3. GPIO 설정
-다음과 같이 GPIO를 설정한다.  
-![]({EAF31B8D-8800-478B-8202-5B7206C3FE05}.png)  
-
-설정된 모습  
-![]({029A8A1D-15A5-4883-BF37-56B66B5AEA89}.png)
-
-
-### 4. Timer 설정
-다음과 같이 Timer를 설정한다.  
-![](image-4.png)  
-Timer Interrupt를 활성화하기위해 NVIC를 활성화한다.  
-![](image-5.png)  
-
-
-### 5. project manager 설정
-code generator에서 Generate peripheral initialization as a pair of '.c/.h' files per peripheral를 선택한다.  
--> 관련 파일이 각각 따로 만들어져 보기 편하다고 한다.  
-![](image-6.png)  
-
-
-
-다했으면 톱니바퀴 아이콘을 눌러서 프로젝트를 생성한다.  
-![](image-7.png)  
-
+[](./stm32_환경구성.md)
 
 
 # 프로젝트 Layer
@@ -141,6 +95,18 @@ ap_main.o가 위와같은 section으로 나뉘어져있다.
 
 > 이유는 아직 컴파일러가 최적화를 하지 않았기 때문이다.
 
+링크 되어있지 않은 object 파일은 함수에 대해 주소가 모두 0으로 할당된다.
+변수 또한 0으로 할당된다.
+
+> **Why?**  
+object파일은 여러 개 일 수 있다.  
+object 파일은 주소 할당이 되어있지 않고, 단지 심볼(`section`)만 나뉘어져있다.
+
+***Object 파일은 섹션 정보의 묶음이다.***  
+
+***Object파일을 묶어서 Linker가 주소할당을 해준다.***
+
+
 **`ap_main.nm` 파일 생성**
 
     arm-none-eabi-nm -nS ap_main.o > ap_main.nm
@@ -151,3 +117,28 @@ ap_main.o가 위와같은 section으로 나뉘어져있다.
 `ap_main.nm`파일이 생성되었다!
 
 ap_main.nm 파일은 심볼을 출력하는 파일이다.
+(함수명, 변수명 심볼 출력)
+
+- 심볼?  
+    `.bss`, `.data`, `.text`를 의미한다.
+
+![]({B99A8D3B-7903-421B-925D-9C31631141C1}.png)
+
+`B`: BSS 영역  
+`D`: Data 영역  
+`T`: Text 영역  
+
+![]({6EA0A4FE-CCB6-4F5F-A7DE-58ECBEF95335}.png)  
+`hBtnMode`는 전역변수인데 초기화되지 않은 변수이므로 `.bss` 영역에 저장된다.
+
+
+![](image-12.png)  
+
+
+`.bss`: 전역변수인데 초기화되지 않은 변수  
+`.data`: 전역변수인데 초기화된 변수  
+`.text`: 함수, 코드가 저장되는 영역  
+
+## STM32 컴파일 과정
+
+[](./stm32_compile.md)
