@@ -10,4 +10,7 @@
 
 #include "btn.h"
 #include "Controller.h"
+
+void Listener_Init();
+void Listener_Execute();
 #endif /* AP_INC_LISTENER_H_ */

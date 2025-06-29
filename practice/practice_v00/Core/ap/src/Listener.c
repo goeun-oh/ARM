@@ -7,12 +7,12 @@
 
 #include "Listener.h"
 
-static void Listener_Execute();
+
 static void Listener_CheckButton();
 
 
 void Listener_Init(){
-	Button_Init(&hBtn0, hBtn0 -> GPIOx, hBtn0->pinNum, hBtn0->prevState);
+	Button_Init(&hBtn0, GPIOB, GPIO_PIN_5);
 }
 
 void Listener_Execute(){
