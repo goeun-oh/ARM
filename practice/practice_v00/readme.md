@@ -125,3 +125,72 @@ void LedBar_Write(uint8_t data){
 
 
 
+# MVP 패턴 설계 (Model-View-Presenter)
+
+## MVP Seqeunce Diagram
+
+```
+# MVP Sequence Diagram (With Function Names)
+
+Listener       Controller            Presenter
+   |                |                    |
+   |  Listener_Execute()                 |
+   |  └─ Listener_CheckButton()        |
+   |--------------->|                    |
+   |                |  Controller_Execute()  
+   |                |  └─ Controller_Mode()  
+   |                |--------------->     |
+   |                |                     |  Presenter_Execute()
+   |                |                     |  └─ RUN_LED()
+   |                |                     |---------------> 
+   |                |                     |  HAL_Delay(100ms)
+   |                |                     |
+   |<----------------------------------------------|
+                       (메인 루프 반복)
+
+```
+
+
+# Delay 대신 Interrupt 고민하기
+
+`TIM2`를 이용하자
+
+`PSC` : 100-1  
+`ARR` : 1000-1  
+
+## 타이머 인터럽트 시작하는 방법
+
+```c
+//stm32f4xx_hal_tim.c
+HAL_TIM_Base_Start_IT(&htim2);
+```
+
+타이머 인터럽트를 위와 같이 실행하고 나면,
+
+```
+타이머 주기 도달
+      ↓
+타이머가 하드웨어적으로 IRQ 발생
+      ↓
+TIMx_IRQHandler() 자동 호출
+      ↓
+HAL_TIM_IRQHandler() 자동 호출
+      ↓
+HAL_TIM_PeriodElapsedCallback() 호출
+      ↓
+사용자가 작성한 코드 실행
+```
+
+
+## `HAL_TIM_PeriodElapsedCallback()` 정의하기
+
+```c
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if(htim->Instance == TIM2)  // TIM2에서 발생한 인터럽트인지 확인
+    {
+        // 여기에 내가 원하는 인터럽트 동작 작성
+    }
+}
+```
+
