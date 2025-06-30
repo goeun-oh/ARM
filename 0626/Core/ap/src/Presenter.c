@@ -101,3 +101,5 @@ void Presenter_DispMonitorStopWatch(watch_t watchData)
 	sprintf(str,"Stop Watch : %02d:%02d:%02d.%03d\n", watchData.hour, watchData.min, watchData.sec, watchData.msec);
 	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 1000);
 }
+
+
