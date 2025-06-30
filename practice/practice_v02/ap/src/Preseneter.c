@@ -66,12 +66,12 @@ void Presenter_DispLCDMonitor(){
 }
 void Presenter_DispLCDTimeWatch(watch_t watchData){
 	char str[50];
-	sprintf(str,"Time : %02d:%02d:%02d.%03d\n", watchData.hour, watchData.min, watchData.sec, watchData.msec);
+	sprintf(str,"T : %02d:%02d:%02d.%03d\n", watchData.hour, watchData.min, watchData.sec, watchData.msec);
 	LCD_writeStringXY(0, 0, str);
 }
 void Presenter_DispLCDStopWatch(watch_t watchData){
 	char str[50];
-	sprintf(str,"Time : %02d:%02d:%02d.%03d\n", watchData.hour, watchData.min, watchData.sec, watchData.msec);
+	sprintf(str,"S : %02d:%02d:%02d.%03d\n", watchData.hour, watchData.min, watchData.sec, watchData.msec);
 	LCD_writeStringXY(1, 0, str);
 }
 
