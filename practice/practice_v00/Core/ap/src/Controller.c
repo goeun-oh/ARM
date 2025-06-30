@@ -10,9 +10,9 @@
 
 inputData_TypeDef controlData = {0};
 
+typedef enum {S_TIME_WATCH=0, S_STOP_WATCH} watchModeState_t;
 
-
-static ledState_t ledState = LED_OFF_ALL;
+static watchModeState_t modeState = S_TIME_WATCH;
 static void Controller_Mode();
 
 void Controller_Execute(){
@@ -22,32 +22,30 @@ void Controller_Execute(){
 void Controller_SetInputData(inputData_TypeDef inputData){
 	if(inputData.id == LED){
 		controlData.id = LED;
+	}else if(inputData.id == MODE){
+		controlData.id = MODE;
+	}else if(inputData.id == STOPWATCH_RUN_STOP){
+		controlData.id = STOPWATCH_RUN_STOP;
 	}
 }
 
 void Controller_Mode(){
-	switch(ledState){
-	case LED_OFF_ALL:
-		if(controlData.id == LED){
+	switch(modeState){
+	case S_TIME_WATCH:
+		if(controlData.id == MODE){
 			controlData.id = NO_CONTROL;
-			ledState = LED_SHIFT_LEFT;
+			modeState = S_STOP_WATCH;
 		}
+		TimeWatch_Execute();
 		break;
-	case LED_SHIFT_LEFT:
-		if(controlData.id == LED){
+	case S_STOP_WATCH:
+		if(controlData.id == MODE){
 			controlData.id = NO_CONTROL;
-			ledState = LED_SHIFT_RIGHT;
+			modeState = S_TIME_WATCH;
 		}
-		break;
-	case LED_SHIFT_RIGHT:
-		if(controlData.id == LED){
-			controlData.id = NO_CONTROL;
-			ledState = LED_OFF_ALL;
-		}
+		StopWatch_Excute();
 		break;
 	}
+	LED_Excute();
 }
 
-ledState_t Controller_GetLedState(){
-	return ledState;
-}

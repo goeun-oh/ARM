@@ -16,6 +16,8 @@ typedef struct{
 }Btn_Handler_t;
 
 extern Btn_Handler_t hBtn0;
+extern Btn_Handler_t hBtnMode;
+extern Btn_Handler_t hBtnRUN;
 
 typedef enum {NO_ACT, ACT_PUSHED, ACT_RELEASED} Btn_State_t;
 

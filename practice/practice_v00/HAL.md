@@ -53,3 +53,18 @@ void SysTick_Handler(void)
 }
 ```
 
+### HAL_GetTick()
+uwTick을 가져오는 애
+
+```c
+/*
+  * @brief Provides a tick value in millisecond.
+  * @note This function is declared as __weak to be overwritten in case of other 
+  *       implementations in user file.
+  * @retval tick value
+  */
+__weak uint32_t HAL_GetTick(void)
+{
+  return uwTick;
+}
+```

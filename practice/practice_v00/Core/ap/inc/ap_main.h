@@ -12,5 +12,9 @@
 #include "Listener.h"
 #include "Controller.h"
 #include "Presenter.h"
+#include "tim.h"
 
+int ap_main();
+
+void ap_init();
 #endif /* AP_INC_AP_MAIN_H_ */

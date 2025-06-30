@@ -11,6 +11,8 @@
 
 enum {PUSHED=0, RELEASED};
 Btn_Handler_t hBtn0;
+Btn_Handler_t hBtnMode;
+Btn_Handler_t hBtnRUN;
 
 void Button_Init(Btn_Handler_t *hbtnx,GPIO_TypeDef *GPIOx, uint16_t pinNum){
 	hbtnx -> GPIOx  = GPIOx;

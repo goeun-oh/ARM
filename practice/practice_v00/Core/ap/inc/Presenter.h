@@ -8,9 +8,13 @@
 #ifndef AP_INC_PRESENTER_H_
 #define AP_INC_PRESENTER_H_
 
-#include "Controller.h"
 #include "led_contrl.h"
+#include "led_type.h"
+#include "Model_Watch.h"
+#include "fnd.h"
 
+void Presenter_OutData(watch_t watchData);
+void Presenter_LED_OutData(led_t ledOutData);
 void Presenter_Execute();
 
 #endif /* AP_INC_PRESENTER_H_ */
