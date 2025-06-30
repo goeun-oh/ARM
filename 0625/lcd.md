@@ -73,3 +73,4 @@ two type data operation이 존재 (4bit, 8bit)
 ioc 파일에서 설정해주기
 
 ![]({AE02D46F-0632-44DE-BFFD-33F2FF6ABB8D}.png)
+
